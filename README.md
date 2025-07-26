@@ -18,7 +18,7 @@ You will need the following tools and libraries to build and run this project.
     *   **macOS**: `brew install ninja`
     *   **Linux**: `sudo apt-get install ninja-build`
 
-4.  **Boost**: The Boost C++ libraries are required, specifically the `stacktrace` component. The recommended way to install Boost is with vcpkg, as described in the example below.
+4.  **Boost**: The Boost C++ libraries are required, specifically the `stacktrace` component. The recommended way to install Boost is with vcpkg, as described in the example below. Note that when using CMake, you may need to link against a specific backend like `stacktrace_backtrace`.
 
 ## Full Example: Building with vcpkg
 

@@ -2,11 +2,10 @@
 #include <iostream>
 #include <stdexcept>
 #include <dlfcn.h>
+#include <typeinfo>
 
 // Thread-local storage for the stacktrace
 thread_local boost::stacktrace::stacktrace current_stacktrace;
-
-#include <typeinfo>
 
 // Pointer to the original __cxa_throw function
 using cxa_throw_type = void (*)(void*, std::type_info*, void (*) (void*));
