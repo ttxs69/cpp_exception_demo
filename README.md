@@ -18,54 +18,67 @@ You will need the following tools and libraries to build and run this project.
     *   **macOS**: `brew install ninja`
     *   **Linux**: `sudo apt-get install ninja-build`
 
-4.  **Boost**: The Boost C++ libraries are required, specifically the `stacktrace` component.
+4.  **Boost**: The Boost C++ libraries are required, specifically the `stacktrace` component. The recommended way to install Boost is with vcpkg, as described in the example below.
 
-    **Recommended Method: vcpkg**
+## Full Example: Building with vcpkg
 
-    The `CMakeLists.txt` in this repository is pre-configured to integrate with [vcpkg](https://github.com/microsoft/vcpkg). This is the recommended way to manage the Boost dependency.
+This section provides a complete, step-by-step guide to building the project using the vcpkg package manager.
 
-    a. **Install vcpkg**: Follow the official vcpkg documentation to install it.
-    b. **Set the `VCPKG_ROOT` environment variable**: Make sure the `VCPKG_ROOT` environment variable is set to your vcpkg installation path.
-    c. **Install Boost**:
-        ```sh
-        vcpkg install boost:stacktrace
-        ```
+**Step 1: Install vcpkg**
 
-    **Alternative Method: System Package Manager**
+First, clone the vcpkg repository and run its bootstrap script. This only needs to be done once.
 
-    *   **macOS (Homebrew)**: `brew install boost`
-    *   **Linux (APT)**: `sudo apt-get install libboost-all-dev`
+```sh
+# Clone the vcpkg repository
+git clone https://github.com/microsoft/vcpkg.git
+cd vcpkg
 
-## Building and Running
+# Run the bootstrap script
+./bootstrap-vcpkg.sh
+```
 
-Once you have installed the dependencies, you can build the project using the following steps.
+**Step 2: Set up Environment Variable**
 
-1.  **Clone the repository:**
-    ```sh
-    git clone <repository-url>
-    cd <repository-directory>
-    ```
+For CMake to find the vcpkg toolchain, you need to set the `VCPKG_ROOT` environment variable.
 
-2.  **Configure with CMake:**
-    *   If you are using **vcpkg**, CMake will automatically find it via the `VCPKG_ROOT` environment variable.
-        ```sh
-        cmake -B build -G Ninja
-        ```
-    *   If you installed Boost using a **system package manager**, you may need to provide a hint to CMake if it's not in a standard location.
-        ```sh
-        cmake -B build -G Ninja
-        ```
+```sh
+# Set the variable for the current terminal session
+export VCPKG_ROOT=$(pwd)
 
-3.  **Build with Ninja:**
-    ```sh
-    ninja -C build
-    ```
+# Optional: Add the line above to your shell profile (~/.bashrc, ~/.zshrc, etc.)
+# to make it permanent.
+```
 
-4.  **Run the application:**
-    ```sh
-    ./build/my_app
-    ```
-    The output will show the exception message followed by the stack trace captured from the location where the exception was thrown.
+**Step 3: Install Boost Dependency**
+
+Use vcpkg to install the `boost-stacktrace` package.
+
+```sh
+# The 'vcpkg' executable is now in the root of the vcpkg directory
+./vcpkg install boost-stacktrace
+```
+
+**Step 4: Clone and Build This Project**
+
+Now that the dependencies are ready, you can clone and build the `exception_demo` project.
+
+```sh
+# Navigate to a different directory to clone the project
+cd ..
+git clone https://github.com/your-username/exception_demo.git # Replace with the actual URL
+cd exception_demo
+
+# Configure with CMake. It will automatically use vcpkg.
+cmake -B build -G Ninja
+
+# Build with Ninja
+ninja -C build
+
+# Run the application
+./build/my_app
+```
+
+The output will show the exception message followed by the stack trace captured from the location where the exception was thrown.
 
 ## How It Works: Global Interception via `__cxa_throw`
 
