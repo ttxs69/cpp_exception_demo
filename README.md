@@ -2,26 +2,66 @@
 
 This repository demonstrates an advanced, non-intrusive technique for capturing a stack trace at the moment an exception is thrown in C++. This is a common requirement for debugging and logging, as it provides crucial context about where an error originated without requiring any changes to the application's source code at the `throw` sites.
 
-## Prerequisites
+## Dependencies
 
-- A C++17 compliant compiler that uses the Itanium C++ ABI (e.g., GCC, Clang on macOS or Linux)
-- [CMake](https://cmake.org/) (version 3.10 or later)
-- [Boost](https://www.boost.org/) libraries (specifically `stacktrace`)
-- [Ninja](https://ninja-build.org/) build system (or you can use Make)
+You will need the following tools and libraries to build and run this project.
+
+1.  **C++17 Compiler**: A compiler that supports C++17 and the Itanium C++ ABI.
+    *   **macOS**: Apple Clang (available via Xcode Command Line Tools)
+    *   **Linux**: GCC or Clang (`sudo apt-get install build-essential g++`)
+
+2.  **CMake**: A modern build system generator (version 3.10 or later).
+    *   **macOS**: `brew install cmake`
+    *   **Linux**: `sudo apt-get install cmake`
+
+3.  **Ninja**: A fast, small build system (optional, but recommended).
+    *   **macOS**: `brew install ninja`
+    *   **Linux**: `sudo apt-get install ninja-build`
+
+4.  **Boost**: The Boost C++ libraries are required, specifically the `stacktrace` component.
+
+    **Recommended Method: vcpkg**
+
+    The `CMakeLists.txt` in this repository is pre-configured to integrate with [vcpkg](https://github.com/microsoft/vcpkg). This is the recommended way to manage the Boost dependency.
+
+    a. **Install vcpkg**: Follow the official vcpkg documentation to install it.
+    b. **Set the `VCPKG_ROOT` environment variable**: Make sure the `VCPKG_ROOT` environment variable is set to your vcpkg installation path.
+    c. **Install Boost**:
+        ```sh
+        vcpkg install boost:stacktrace
+        ```
+
+    **Alternative Method: System Package Manager**
+
+    *   **macOS (Homebrew)**: `brew install boost`
+    *   **Linux (APT)**: `sudo apt-get install libboost-all-dev`
 
 ## Building and Running
 
-1.  **Configure with CMake:**
+Once you have installed the dependencies, you can build the project using the following steps.
+
+1.  **Clone the repository:**
     ```sh
-    cmake -B build
+    git clone <repository-url>
+    cd <repository-directory>
     ```
 
-2.  **Build with Ninja:**
+2.  **Configure with CMake:**
+    *   If you are using **vcpkg**, CMake will automatically find it via the `VCPKG_ROOT` environment variable.
+        ```sh
+        cmake -B build -G Ninja
+        ```
+    *   If you installed Boost using a **system package manager**, you may need to provide a hint to CMake if it's not in a standard location.
+        ```sh
+        cmake -B build -G Ninja
+        ```
+
+3.  **Build with Ninja:**
     ```sh
     ninja -C build
     ```
 
-3.  **Run the application:**
+4.  **Run the application:**
     ```sh
     ./build/my_app
     ```
