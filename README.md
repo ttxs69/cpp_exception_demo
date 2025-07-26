@@ -78,7 +78,17 @@ ninja -C build
 ./build/my_app
 ```
 
-The output will show the exception message followed by the stack trace captured from the location where the exception was thrown.
+## Example Output
+
+Running the application will produce output similar to the following. The exact paths and addresses will vary depending on your system.
+
+```
+This is a test exception
+Stacktrace from throw site:
+ 0# __cxa_throw in .../build/my_app
+ 1# add(int, int) in .../build/my_app
+ 2# main in .../build/my_app
+```
 
 ## How It Works: Global Interception via `__cxa_throw`
 
