@@ -2,6 +2,18 @@
 
 This repository demonstrates an advanced, non-intrusive technique for capturing a stack trace at the moment an exception is thrown in C++. This is a common requirement for debugging and logging, as it provides crucial context about where an error originated without requiring any changes to the application's source code at the `throw` sites.
 
+## Example Output
+
+Running the application will produce output similar to the following. The exact paths and addresses will vary depending on your system.
+
+```
+This is a test exception
+Stacktrace from throw site:
+ 0# __cxa_throw in .../build/my_app
+ 1# add(int, int) in .../build/my_app
+ 2# main in .../build/my_app
+```
+
 ## Dependencies
 
 You will need the following tools and libraries to build and run this project.
@@ -76,18 +88,6 @@ ninja -C build
 
 # Run the application
 ./build/my_app
-```
-
-## Example Output
-
-Running the application will produce output similar to the following. The exact paths and addresses will vary depending on your system.
-
-```
-This is a test exception
-Stacktrace from throw site:
- 0# __cxa_throw in .../build/my_app
- 1# add(int, int) in .../build/my_app
- 2# main in .../build/my_app
 ```
 
 ## How It Works: Global Interception via `__cxa_throw`
